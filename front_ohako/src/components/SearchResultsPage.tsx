@@ -5,7 +5,7 @@ import { RootState } from '../redux/store';
 import TopBar from './TopBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './styles/SearchResultsPage.css'; // 新しいスタイルシートをインポート
+import './styles/SearchResultsPage.css';
 import config from '../config';
 
 interface Track {
@@ -23,7 +23,7 @@ const useQuery = () => {
 const SearchResultsPage: React.FC = () => {
   const [results, setResults] = useState<Track[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [playlist, setPlaylist] = useState<string[]>([]); // 追加された楽曲のSpotify IDリスト
+  const [playlist, setPlaylist] = useState<string[]>([]);
   const token = useSelector((state: RootState) => state.auth.token);
   const query = useQuery().get('query') || '';
 
@@ -61,8 +61,7 @@ const SearchResultsPage: React.FC = () => {
           });
           if (response.ok) {
             const data = await response.json();
-            console.log("Search Results:", data); // デバッグ用にデータを出力
-            // フィールド名をマッピング
+            console.log("Search Results:", data);
             const mappedResults = data.map((track: any) => ({
               spotify_id: track.id,
               name: track.name,
@@ -144,53 +143,60 @@ const SearchResultsPage: React.FC = () => {
   };
 
   return (
-    <div className="search-results-page">
-      <TopBar />
-      <ToastContainer />
-      <h1>"{query}"と同じぐらいのキーの曲</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div className="results">
-          {results.length === 0 ? (
-            <p>No results found.</p>
-          ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>タイトル</th>
-                  <th>アーティスト</th>
-                  <th>アルバム</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                {results.map((result, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <img src={result.album_image ?? ''} alt={`${result.name} album cover`} />
-                      <div>
-                        <h3>{result.name}</h3>
-                      </div>
-                    </td>
-                    <td>{result.artists}</td>
-                    <td>{result.album_name}</td>
-                    <td>
-                      {playlist.includes(result.spotify_id) ? (
-                        <button onClick={() => removeFromPlaylist(result.spotify_id)} className='minus-button'>-</button>
-                      ) : (
-                        <button onClick={() => addToPlaylist(result.spotify_id)} className='plus-button'>+</button>
-                      )}
-                    </td>
+    <div>
+      <video id="background-video" autoPlay loop muted>
+        <source src="/videos/login_background_2.mov" type="video/mp4" />
+      </video>
+      <div className="search-results-page">
+        <TopBar />
+        <ToastContainer />
+        <h1>"{query}"と同じぐらいのキーの曲</h1>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="results">
+            {results.length === 0 ? (
+              <p>No results found.</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>タイトル</th>
+                    <th>アーティスト</th>
+                    <th>アルバム</th>
+                    <th>操作</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-      )}
+                </thead>
+                <tbody>
+                  {results.map((result, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <img src={result.album_image ?? ''} alt={`${result.name} album cover`} />
+                        <div>
+                          <h3>{result.name}</h3>
+                        </div>
+                      </td>
+                      <td>{result.artists}</td>
+                      <td>{result.album_name}</td>
+                      <td>
+                        {playlist.includes(result.spotify_id) ? (
+                          <button onClick={() => removeFromPlaylist(result.spotify_id)} className='minus-button'>
+                            <img src="/images/GarbageCan.png" alt="Remove" style={{ width: '20px', height: '20px' }} />
+                          </button>
+                        ) : (
+                          <button onClick={() => addToPlaylist(result.spotify_id)} className='plus-button'>+</button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

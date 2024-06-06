@@ -13,6 +13,13 @@
   cursor: pointer;
 }
 
+.ohako-logo {
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  filter: invert(1); /* 画像の白黒を反転 */
+}
+
 .search-container {
   position: relative;
 }

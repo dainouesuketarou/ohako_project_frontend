@@ -1,3 +1,20 @@
+.background-video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(1.5); /* 明るさを調整 */
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -8,6 +25,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1; /* モーダルを動画の前面に表示 */
 }
 
 .modal-content {
@@ -16,11 +34,16 @@
   max-width: 600px;
   height: auto;
   max-height: 90vh;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   display: flex;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   overflow: hidden;
+}
+
+.modal-left, .modal-right {
+  position: relative;
+  z-index: 1;
 }
 
 .modal-left {
@@ -37,6 +60,11 @@
   margin: 0;
   font-size: 24px;
   font-weight: bold;
+}
+
+.ohako-logo {
+  width: 150px;
+  height: 150px;
 }
 
 .modal-left p {

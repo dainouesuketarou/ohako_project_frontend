@@ -59,13 +59,20 @@ const TopBar: React.FC = () => {
 
   return (
     <div className="top-bar">
-      <div className="logo" onClick={() => navigate('/')}>OHAKO</div>
+      <div className="logo" onClick={() => navigate('/')}>
+        <img
+          src="images/OHAKO_logo_1.png"
+          alt="OHAKO ロゴ"
+          className="ohako-logo"
+          style={{ filter: "invert(1)" }}
+        />
+      </div>
       <div className="search-container">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for a track..."
+          placeholder="Search for a track…　　🔎"
         />
         {showSuggestions && (
           <div className="suggestions">

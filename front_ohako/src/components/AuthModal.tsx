@@ -73,75 +73,83 @@ const AuthModal: React.FC<AuthModalProps> = ({ isLogin, closeModal, toggleModal 
   };
 
   return (
-    <Modal
-      isOpen={true}
-      onRequestClose={closeModal}
-      className="modal-content"
-      overlayClassName="modal-overlay"
-      shouldCloseOnOverlayClick={false} // 追加
-    >
-      <div className="modal-left">
-        <h2>OHAKO</h2>
-        <p>カラオケに最適な歌を</p>
+    <>
+      <div className="background-video-container">
+        <video autoPlay loop muted className="background-video">
+          <source src="/videos/login_background_1.mov" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
-      <div className="modal-right">
-        {isLogin ? (
-          <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLoginSubmit}>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-                required
-              />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                required
-              />
-              <button type="submit">Login</button>
-              {error && <p className="error">{error}</p>}
-              <p>
-                <span onClick={toggleModal} className="link-text">
-                  アカウントを持っていない方はこちら
-                </span>
-              </p>
-            </form>
-          </div>
-        ) : (
-          <div>
-            <h2>Sign Up</h2>
-            <form onSubmit={handleSignupSubmit}>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-                required
-              />
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                required
-              />
-              <button type="submit">Sign Up</button>
-              {error && <p className="error">{error}</p>}
-              <p>
-                <span onClick={toggleModal} className="link-text">
-                  既にアカウントをお持ちですか？
-                </span>
-              </p>
-            </form>
-          </div>
-        )}
-      </div>
-    </Modal>
+      <Modal
+        isOpen={true}
+        onRequestClose={closeModal}
+        className="modal-content"
+        overlayClassName="modal-overlay"
+        shouldCloseOnOverlayClick={false}
+      >
+        <div className="modal-left">
+          <p><img src="images/OHAKO_icon_1.png" alt="OHAKO ロゴ" style={{ width: "150px", height: "150px" }} /></p>
+          <p>あなたに最適な歌を</p>
+        </div>
+        <div className="modal-right">
+          {isLogin ? (
+            <div>
+              <h2>Login</h2>
+              <form onSubmit={handleLoginSubmit}>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
+                  required
+                />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  required
+                />
+                <button type="submit">Login</button>
+                {error && <p className="error">{error}</p>}
+                <p>
+                  <span onClick={toggleModal} className="link-text">
+                    アカウントを持っていない方はこちら
+                  </span>
+                </p>
+              </form>
+            </div>
+          ) : (
+            <div>
+              <h2>Sign Up</h2>
+              <form onSubmit={handleSignupSubmit}>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
+                  required
+                />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  required
+                />
+                <button type="submit">Sign Up</button>
+                {error && <p className="error">{error}</p>}
+                <p>
+                  <span onClick={toggleModal} className="link-text">
+                    既にアカウントをお持ちですか？
+                  </span>
+                </p>
+              </form>
+            </div>
+          )}
+        </div>
+      </Modal>
+    </>
   );
 };
 

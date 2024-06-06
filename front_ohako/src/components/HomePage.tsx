@@ -71,44 +71,51 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="home-page">
-      <TopBar />
-      <ToastContainer />
-      <h1 id="playlist-title">Your OHAKO</h1>
-      <div className="playlist">
-        {songs.length === 0 ? (
-          <p>プレイリストに楽曲はありません</p>
-        ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>タイトル</th>
-                <th>アーティスト</th>
-                <th>アルバム</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              {songs.map((track, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <img src={track.album_image ?? ''} alt={`${track.name} album cover`} />
-                    <div>
-                      <h3>{track.name}</h3>
-                    </div>
-                  </td>
-                  <td>{track.artists}</td>
-                  <td>{track.album_name}</td>
-                  <td>
-                    <button onClick={() => removeFromPlaylist(track.spotify_id)}>-</button>
-                  </td>
+    <div>
+      <video id="background-video" autoPlay loop muted>
+        <source src="/videos/login_background_2.mov" type="video/mp4" />
+      </video>
+      <div className="home-page">
+        <TopBar />
+        <ToastContainer />
+        <h1 id="playlist-title">Your OHAKO</h1>
+        <div className="playlist">
+          {songs.length === 0 ? (
+            <p>プレイリストに楽曲はありません</p>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>タイトル</th>
+                  <th>アーティスト</th>
+                  <th>アルバム</th>
+                  <th>操作</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {songs.map((track, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>
+                      <img src={track.album_image ?? ''} alt={`${track.name} album cover`} />
+                      <div>
+                        <h3>{track.name}</h3>
+                      </div>
+                    </td>
+                    <td>{track.artists}</td>
+                    <td>{track.album_name}</td>
+                    <td>
+                      <button onClick={() => removeFromPlaylist(track.spotify_id)}>
+                        <img src="/images/GarbageCan.png" alt="Remove" style={{ width: '20px', height: '20px' }} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
     </div>
   );
