@@ -24,6 +24,7 @@ const SearchResultsPage: React.FC = () => {
   const [results, setResults] = useState<Track[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [playlist, setPlaylist] = useState<string[]>([]);
+  const [isTempoSearch, setIsTempoSearch] = useState<boolean>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const query = useQuery().get('query') || '';
 
@@ -54,7 +55,10 @@ const SearchResultsPage: React.FC = () => {
       setLoading(true);
       if (token && query) {
         try {
-          const response = await fetch(`${config.API_BASE_URL}/recommendations/?track_name=${query}`, {
+          const endpoint = isTempoSearch
+            ? `${config.API_BASE_URL}/recommendations_by_tempo/?track_name=${query}`
+            : `${config.API_BASE_URL}/recommendations/?track_name=${query}`;
+          const response = await fetch(endpoint, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -82,7 +86,7 @@ const SearchResultsPage: React.FC = () => {
     };
 
     fetchSearchResults();
-  }, [token, query]);
+  }, [token, query, isTempoSearch]);
 
   useEffect(() => {
     fetchPlaylist();
@@ -150,7 +154,10 @@ const SearchResultsPage: React.FC = () => {
       <div className="search-results-page">
         <TopBar />
         <ToastContainer />
-        <h1>"{query}"と同じぐらいのキーの曲</h1>
+        <h1>"{query}"と同じぐらいの{isTempoSearch ? 'テンポ' : 'キー'}の曲</h1>
+        <button onClick={() => setIsTempoSearch(!isTempoSearch)}>
+          {isTempoSearch ? 'キーで検索' : 'テンポで検索'}
+        </button>
         {loading ? (
           <p>Loading...</p>
         ) : (
