@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -19,6 +19,7 @@ const TopBar: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.auth.token);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -57,11 +58,17 @@ const TopBar: React.FC = () => {
     navigate(`/search?query=${encodeURIComponent(track.name)}`);
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
+  console.log("User Profile Image:", user?.profile_image); // 追加: 画像URLの確認
+
   return (
     <div className="top-bar">
       <div className="logo" onClick={() => navigate('/')}>
         <img
-          src="images/OHAKO_logo_1.png"
+          src="/images/OHAKO_logo_1.png"
           alt="OHAKO ロゴ"
           className="ohako-logo"
           style={{ filter: "invert(1)" }}
@@ -72,7 +79,8 @@ const TopBar: React.FC = () => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for a track…　　🔎"
+          placeholder="Search for a track…　　　　　　　　　　　🔎"
+          className="search-input"
         />
         {showSuggestions && (
           <div className="suggestions">
@@ -93,6 +101,15 @@ const TopBar: React.FC = () => {
             )}
           </div>
         )}
+      </div>
+      <div className="profile-container" onClick={handleProfileClick}>
+        <div className="profile-image-container">
+          <img
+            src={user?.profile_image ? `${config.API_BASE_URL}${user.profile_image}?${new Date().getTime()}` : "/images/default_profile.png"}
+            alt="プロフィール画像"
+            className={`profile-image ${!user?.profile_image ? "default-profile-image" : ""}`} // 条件に応じてクラスを適用
+          />
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import TopBar from './TopBar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/SearchResultsPage.css';
@@ -22,11 +21,13 @@ const useQuery = () => {
 
 const SearchResultsPage: React.FC = () => {
   const [results, setResults] = useState<Track[]>([]);
+  const [trackInfo, setTrackInfo] = useState<Track | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [playlist, setPlaylist] = useState<string[]>([]);
   const [isTempoSearch, setIsTempoSearch] = useState<boolean>(false);
   const token = useSelector((state: RootState) => state.auth.token);
   const query = useQuery().get('query') || '';
+  const navigate = useNavigate();
 
   const fetchPlaylist = useCallback(async () => {
     if (token) {
@@ -55,25 +56,37 @@ const SearchResultsPage: React.FC = () => {
       setLoading(true);
       if (token && query) {
         try {
-          const endpoint = isTempoSearch
+          const searchEndpoint = isTempoSearch
             ? `${config.API_BASE_URL}/recommendations_by_tempo/?track_name=${query}`
             : `${config.API_BASE_URL}/recommendations/?track_name=${query}`;
-          const response = await fetch(endpoint, {
+
+          const response = await fetch(searchEndpoint, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
+
           if (response.ok) {
             const data = await response.json();
-            console.log("Search Results:", data);
-            const mappedResults = data.map((track: any) => ({
-              spotify_id: track.id,
-              name: track.name,
-              artists: track.artists.join(', '),
-              album_name: track.album_name,
-              album_image: track.album_image,
-            }));
-            setResults(mappedResults);
+            if (data && data.recommendations) {
+              const mappedResults = data.recommendations.map((track: any) => ({
+                spotify_id: track.id,
+                name: track.name,
+                artists: track.artists.join(', '),
+                album_name: track.album_name,
+                album_image: track.album_image,
+              }));
+              setResults(mappedResults);
+              setTrackInfo({
+                spotify_id: data.track_info.id,
+                name: data.track_info.name,
+                artists: data.track_info.artists.join(', '),
+                album_name: data.track_info.album_name,
+                album_image: data.track_info.album_image,
+              });
+            } else {
+              console.error('Unexpected response format');
+            }
           } else {
             console.error('Search failed');
           }
@@ -146,17 +159,35 @@ const SearchResultsPage: React.FC = () => {
     }
   };
 
+  const handleNavigateToTrackUsers = (spotify_id: string) => {
+    navigate(`/track_users/${spotify_id}`);
+  };
+
   return (
     <div>
       <video id="background-video" autoPlay loop muted>
         <source src="/videos/login_background_2.mov" type="video/mp4" />
       </video>
       <div className="search-results-page">
-        <TopBar />
         <ToastContainer />
-        <h1>"{query}"と同じぐらいの{isTempoSearch ? 'テンポ' : 'キー'}の曲</h1>
-        <button onClick={() => setIsTempoSearch(!isTempoSearch)}>
-          {isTempoSearch ? 'キーで検索' : 'テンポで検索'}
+        {trackInfo && (
+          <div className="search-results-header">
+            <img src={trackInfo.album_image || ''} alt="Album cover" />
+            <h1>{trackInfo.name} - {trackInfo.artists}</h1>
+            {playlist.includes(trackInfo.spotify_id) ? (
+              <button onClick={() => removeFromPlaylist(trackInfo.spotify_id)} className='minus-button2'>
+                <img src="/images/GarbageCan.png" alt="Remove" style={{ width: '20px', height: '20px' }} />
+              </button>
+            ) : (
+              <button onClick={() => addToPlaylist(trackInfo.spotify_id)} className='plus-button2'>+</button>
+            )}
+            <button onClick={() => handleNavigateToTrackUsers(trackInfo.spotify_id)} className='user-list-button3'>
+              <img src="/images/search_user.png" alt="User List" style={{ width: '20px', height: '20px' }} />
+            </button>
+          </div>
+        )}
+        <button onClick={() => setIsTempoSearch(!isTempoSearch)} className='search-menu-button'>
+          {isTempoSearch ? '⇔ キーで検索' : '⇔ テンポで検索'}
         </button>
         {loading ? (
           <p>Loading...</p>
@@ -180,7 +211,7 @@ const SearchResultsPage: React.FC = () => {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>
-                        <img src={result.album_image ?? ''} alt={`${result.name} album cover`} />
+                        <img src={result.album_image || ''} alt={`${result.name} album cover`} />
                         <div>
                           <h3>{result.name}</h3>
                         </div>
@@ -195,6 +226,9 @@ const SearchResultsPage: React.FC = () => {
                         ) : (
                           <button onClick={() => addToPlaylist(result.spotify_id)} className='plus-button'>+</button>
                         )}
+                        <button onClick={() => handleNavigateToTrackUsers(result.spotify_id)} className='user-list-button'>
+                          <img src="/images/search_user.png" alt="User List" style={{ width: '20px', height: '20px' }} />
+                        </button>
                       </td>
                     </tr>
                   ))}

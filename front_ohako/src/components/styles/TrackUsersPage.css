@@ -1,0 +1,39 @@
+.track-users-page {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1e1e1e;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.user-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.profile-image-container {
+  position: relative;
+  width: 60px; /* 白い円の幅と高さを指定 */
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fff; /* 背景色を白に設定 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px; /* 間隔を調整 */
+}
+
+.profile-image {
+  width: 50px; /* プロフィール画像の幅と高さを指定 */
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}

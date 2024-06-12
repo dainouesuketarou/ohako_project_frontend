@@ -1,0 +1,63 @@
+.user-playlist-page {
+  padding: 20px;
+  color: #fff;
+}
+
+.user-playlist-page h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.user-playlist-page table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-playlist-page th, .user-playlist-page td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.user-playlist-page th {
+  background-color: #222;
+}
+
+.user-playlist-page tr:nth-child(even) {
+  background-color: #333;
+}
+
+.user-playlist-page img {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+
+.user-playlist-page .plus-button, .user-playlist-page .minus-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #fff;
+}
+
+.user-playlist-page .plus-button img, .user-playlist-page .minus-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.user-playlist-page .user-list-button {
+  background-color: red;
+  border: none;
+  padding: 5px 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.user-playlist-page .user-list-button img {
+  width: 20px;
+  height: 20px;
+}
+
+

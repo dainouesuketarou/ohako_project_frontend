@@ -4,6 +4,10 @@ import HomePage from './components/HomePage';
 import SearchResultsPage from './components/SearchResultsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import AuthModal from './components/AuthModal';
+import TopBar from './components/TopBar';
+import UserProfile from './components/UserProfile';
+import UserPlaylistPage from './components/UserPlaylistPage';
+import TrackUsersPage from './components/TrackUsersPage';
 import './styles/App.css';
 
 const App: React.FC = () => {
@@ -28,9 +32,13 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="app">
+        {!isLoginOpen && !isSignupOpen && <TopBar />}
         <Routes>
           <Route path="/" element={<ProtectedRoute element={<HomePage />} />} />
           <Route path="/search" element={<ProtectedRoute element={<SearchResultsPage />} />} />
+          <Route path="/profile" element={<ProtectedRoute element={<UserProfile />} />} />
+          <Route path="/user/:userId/playlist" element={<ProtectedRoute element={<UserPlaylistPage />} />} />
+          <Route path="/track_users/:trackId" element={<ProtectedRoute element={<TrackUsersPage />} />} />
         </Routes>
 
         {isLoginOpen && (

@@ -78,3 +78,21 @@ td button img {
 td button:hover {
   background-color: #ff2222;
 }
+
+.user-list-button2 {
+  background-color: #bebcbc !important; /* 背景色を白に設定 */
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-left: 20px; /* 少し右にずらす */
+}
+
+.user-list-button2 img {
+  width: 20px;
+  height: 20px;
+}

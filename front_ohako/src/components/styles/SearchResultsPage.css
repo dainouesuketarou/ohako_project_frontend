@@ -1,91 +1,186 @@
 .search-results-page {
-  width: 80%; /* 幅を80%に設定 */
-  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding-top: 60px; /* トップバーの高さを確保 */
+  background-color: rgba(30, 30, 30, 0.8); /* 背景色を追加し、少し透過を設定 */
+  color: #fff; /* 文字色を白く設定 */
   padding: 20px;
-  background-color: #1e1e1e;
-  color: #fff;
   border-radius: 10px;
-  position: relative; /* 相対位置 */
-  z-index: 1; /* 前面に表示 */
+}
+
+.background-video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
 }
 
 #background-video {
-  position: fixed;
-  top: 50%;
-  left: 50%;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: translate(-50%, -50%);
-  z-index: -1; /* 背面に表示 */
+}
+
+.search-results-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-results-header img {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
 }
 
 .results {
-  margin-top: 20px;
+  position: relative;
+  z-index: 1;
 }
 
-table {
+.results table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th, td {
+.results th,
+.results td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #333;
+  color: #fff; /* 文字色を白く設定 */
 }
 
-th {
+.results th {
   background-color: #2c2c2c;
 }
 
-td img {
+.results td img {
   width: 50px;
   height: 50px;
   margin-right: 10px;
 }
 
-td div {
+.results td div {
   display: inline-block;
   vertical-align: top;
 }
 
 .plus-button {
-  background-color: #28a745; /* 緑色 */
+  background-color: #28a745;
   color: #fff;
   border: none;
-  width: 30px; /* 固定幅を設定 */
-  height: 30px; /* 固定高さを設定 */
-  display: flex; /* フレックスボックスを使用 */
-  align-items: center; /* 垂直方向に中央寄せ */
-  justify-content: center; /* 水平方向に中央寄せ */
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
   cursor: pointer;
-  padding: 0; /* パディングを削除 */
+  padding: 0;
+}
+
+.plus-button2 {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px; /* 少し右にずらす */
 }
 
 .minus-button {
-  background-color: #ff0000; /* 赤色 */
-  border: none;
-  width: 30px; /* 固定幅を設定 */
-  height: 30px; /* 固定高さを設定 */
-  display: flex; /* フレックスボックスを使用 */
-  align-items: center; /* 垂直方向に中央寄せ */
-  justify-content: center; /* 水平方向に中央寄せ */
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 0; /* パディングを削除 */
-}
-
-.minus-button img {
-  width: 15px; /* 幅を調整 */
-  height: 15px; /* 高さを調整 */
+  background-color: #ff0000;
 }
 
 .plus-button:hover {
-  background-color: #218838; /* 緑色のホバー効果 */
+  background-color: #218838;
 }
 
 .minus-button:hover {
-  background-color: #ff2222; /* 赤色のホバー効果 */
+  background-color: #ff2222;
+}
+
+.minus-button img {
+  width: 15px;
+  height: 15px;
+}
+
+.user-list-button {
+  background-color: #bebcbc !important; /* 背景色を白に設定 */
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+
+.user-list-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.user-list-button3 {
+  background-color: #bebcbc !important; /* 背景色を白に設定 */
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+
+.user-list-button3 img {
+  width: 20px;
+  height: 20px;
+  margin: 0 auto; /* 中央に配置 */
+}
+
+.search-menu-button {
+  background-color: #333 !important; /* 背景色を白に設定 */
+  color: #fff; /*文字を白色に設定*/
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.minus-button2 {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px; /* 少し右にずらす */
+}
+
+.minus-button2 img {
+  width: 15px;
+  height: 15px;
+  margin: 0 auto; /* 画像を中央に配置 */
 }

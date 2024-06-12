@@ -33,7 +33,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isLogin, closeModal, toggleModal 
       });
       if (response.ok) {
         const data = await response.json();
-        dispatch(login(data.access));
+        dispatch(login({ token: data.access, user: data.user }));
         closeModal(); // モーダルを閉じる
         navigate('/'); // ホーム画面に遷移
       } else {
@@ -56,7 +56,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isLogin, closeModal, toggleModal 
       });
       if (response.ok) {
         const data = await response.json();
-        dispatch(login(data.access));
+        dispatch(login({ token: data.access, user: data.user }));
         closeModal(); // モーダルを閉じる
         navigate('/'); // ホーム画面に遷移
       } else {

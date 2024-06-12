@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setPlaylist } from '../redux/slices/playlistSlice';
-import TopBar from './TopBar';
+import { useNavigate } from 'react-router-dom'; // useNavigateを追加
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/HomePage.css';
@@ -20,6 +20,7 @@ const HomePage: React.FC = () => {
   const dispatch = useDispatch();
   const songs = useSelector((state: RootState) => state.playlist.songs) as Track[];
   const token = useSelector((state: RootState) => state.auth.token);
+  const navigate = useNavigate(); // useNavigateフックを使用
 
   const fetchPlaylist = useCallback(async () => {
     try {
@@ -76,7 +77,6 @@ const HomePage: React.FC = () => {
         <source src="/videos/login_background_2.mov" type="video/mp4" />
       </video>
       <div className="home-page">
-        <TopBar />
         <ToastContainer />
         <h1 id="playlist-title">Your OHAKO</h1>
         <div className="playlist">
@@ -91,6 +91,7 @@ const HomePage: React.FC = () => {
                   <th>アーティスト</th>
                   <th>アルバム</th>
                   <th>操作</th>
+                  <th>ユーザー</th>
                 </tr>
               </thead>
               <tbody>
@@ -108,6 +109,11 @@ const HomePage: React.FC = () => {
                     <td>
                       <button onClick={() => removeFromPlaylist(track.spotify_id)}>
                         <img src="/images/GarbageCan.png" alt="Remove" style={{ width: '20px', height: '20px' }} />
+                      </button>
+                    </td>
+                    <td>
+                      <button onClick={() => navigate(`/track_users/${track.spotify_id}`)} className='user-list-button2'>
+                        <img src="/images/search_user.png" alt="Remove" style={{ width: '20px', height: '20px' }} />
                       </button>
                     </td>
                   </tr>
