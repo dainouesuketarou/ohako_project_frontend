@@ -79,7 +79,7 @@ const TopBar: React.FC = () => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for a track…　　　　　　　　　　　🔎"
+          placeholder="Search for a track… 🔎"
           className="search-input"
         />
         {showSuggestions && (
